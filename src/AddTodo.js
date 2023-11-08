@@ -1,11 +1,15 @@
 import {React, useState} from 'react';
-import {View, StyleSheet, TextInput, Button} from 'react-native';
+import {View, StyleSheet, TextInput, Button, Alert} from 'react-native';
 
 export const AddTodo = ({onSubmit}) => {
   const [value, setValue] = useState('');
   const pressHandler = () => {
-    onSubmit(value);
-    setValue('');
+    if (value.trim()) {
+      onSubmit(value);
+      setValue('');
+    } else {
+      Alert.alert('Название задачи не может быть пустым');
+    }
   };
 
   return (
@@ -15,6 +19,8 @@ export const AddTodo = ({onSubmit}) => {
         onChangeText={setValue}
         value={value}
         placeholder="Введите название задачи"
+        autoCorrect={false}
+        autoCapitalize="none"
       />
       <Button title="Добавить" onPress={pressHandler} />
     </View>
